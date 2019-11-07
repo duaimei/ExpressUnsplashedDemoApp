@@ -1,7 +1,8 @@
 const routes = require('express').Router();
+const Unsplash = require('../services/unsplash.service')
 var request = require("request");
 
-const ACCESS_KEY = '762f019c6572941c898f045d23688a8b6337eb0a2faf5ec34c9e224a6b2ccab6';
+const ACCESS_KEY = '';
 
 routes.get('/', (req, res) => {
   res.status(200).json({ message: 'Connected to the index of the routes folder!' });
@@ -28,4 +29,12 @@ routes.get('/photo_query', (req, res) => {
   request(options, callback)
 })
 
+routes.get('/unsplash', (req, res) => {
+  Unsplash.query(res)
+})
+
+routes.use('/callback', (req, res) => {
+  console.log('entered the callback')
+  console.log(req)
+})
 module.exports = routes;
