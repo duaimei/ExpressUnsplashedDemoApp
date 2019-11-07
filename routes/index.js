@@ -7,17 +7,25 @@ routes.get('/', (req, res) => {
   res.status(200).json({ message: 'Connected to the index of the routes folder!' });
 });
 
+const options = {
+  url: 'https://api.unsplash.com/photos/',
+  headers: {
+    "Authorization": `Client-ID ${ACCESS_KEY}`
+  }
+}
+
+
 routes.get('/photo_query', (req, res) => {
-  request(`https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`, function(error, response, body) {
+  function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(body)
       res.status(200).json(body)
     } else {
       console.log("something went wrong")
       console.log(error)
       console.log(response.statusCode)
     }
-  })
+  }
+  request(options, callback)
 })
 
 module.exports = routes;
